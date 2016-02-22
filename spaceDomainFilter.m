@@ -50,13 +50,13 @@ print('Gaussian_filter_20_times','-dpng');
 %Image will eventually look like completely black after many iterations
 
 %% B) Image Filtering with my own code
-HPF = [-1 -1 -1 -1 -1; -1 -1 -1 -1 -1;-1 -1 18 -1 -1;-1 -1 -1 -1 -1;-1 -1 -1 -1 -1];
+HPF = (1/25)*[-1 -1 -1 -1 -1; -1 -1 -1 -1 -1;-1 -1 24 -1 -1;-1 -1 -1 -1 -1;-1 -1 -1 -1 -1];
 
 %HPF = [.1 0 .1 0 .1;0 .1 0 .1 0;.1 0 .1 0 .1;0 .1 0 .1 0; .1 0 .1 0 .1];
 HPF = filter_kernel;
 
 colormap(jet(64));
-freqz2(HPF); axis([-1 1 -1 1 0 1])
+freqz2(HPF,[10 10]); axis([-1 1 -1 1 0 1])
 title('Frequency Response of High Pass Filter');
 print('Freq_HPF','-dpng');
 
