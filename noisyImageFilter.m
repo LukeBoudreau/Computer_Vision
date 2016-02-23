@@ -5,7 +5,8 @@ image = imread('lena_gray_512.tif');
 %add noise
 sp_image = imnoise(image,'salt & pepper',0.15);
 %add more noise
-gaussian_image = imnoise(image,'gaussian',0,0.05);
+g_sigma = 0.05;
+gaussian_image = imnoise(image,'gaussian',0,g_sigma);
 subplot(221);
 imshow(mat2gray(image));
 title('Original');
@@ -17,12 +18,13 @@ imshow(mat2gray(gaussian_image));
 title('Gaussian Noise');
 
 %calculate variance FOR SNR.
-image_varience = var(cast(image(:)','double'));
-sp_varience = var(cast(sp_image(:)','double'));
-gaussian_varience = var(cast(gaussian_image(:)','double'));
+image_variance = var(cast(image(:)','double'));
+sp_noise = sp_image - image;
+sp_noise_variance = var(cast(sp_noise(:)','double'));
+gaussian_variance = g_sigma;
 
-SNR_sp = 10*log10(image_varience/sp_varience);
-SNR_gaussian = 10*log10(image_varience/gaussian_varience);
+SNR_sp = 10*log10(image_variance/sp_variance);
+SNR_gaussian = 10*log10(image_variance/gaussian_variance);
 
 subplot(222);
 xlabel(sprintf('SNR = %f', SNR_sp));
@@ -57,5 +59,4 @@ imshow(mat2gray(filtered_image));
 title('Gaussian Noise with Median Filter');
 
 print('LPF_median_filters','-dpng');
-
 

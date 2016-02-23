@@ -51,9 +51,7 @@ print('Gaussian_filter_20_times','-dpng');
 
 %% B) Image Filtering with my own code
 HPF = (1/25)*[-1 -1 -1 -1 -1; -1 -1 -1 -1 -1;-1 -1 24 -1 -1;-1 -1 -1 -1 -1;-1 -1 -1 -1 -1];
-
-%HPF = [.1 0 .1 0 .1;0 .1 0 .1 0;.1 0 .1 0 .1;0 .1 0 .1 0; .1 0 .1 0 .1];
-HPF = filter_kernel;
+%HPF = 1 - createLPF(11,4,6);
 
 colormap(jet(64));
 freqz2(HPF,[10 10]); axis([-1 1 -1 1 0 1])
@@ -62,11 +60,16 @@ print('Freq_HPF','-dpng');
 
 pixels = length(image);
 image_filtered = zeros(pixels);
-for i = 1:pixels
-    for j = 1:pixels
-        image_filtered(i,j) = convolution(image,HPF,i,j);
-    end
-end
+
+%Need to flip filter mask. h(-k,-l)
+%Note does nothing for symmetric matricies
+%HPF = flipud(fliplr(HPF));
+
+% for i = 1:pixels
+%     for j = 1:pixels
+%         image_filtered(i,j) = convolution(image,HPF,i,j);
+%     end
+% end
 
 figure;
 subplot(221);
@@ -74,8 +77,8 @@ imshow(image);
 title('original');
 subplot(222);
 imshow(mat2gray(image_filtered));
-title('Luke shitty convo');
+title('Self Implemented Convolution');
 
 subplot(223);
 imshow(mat2gray(filter2(HPF,image,'same')));
-title('Matlab filter2');
+title('Matlab filter2()');

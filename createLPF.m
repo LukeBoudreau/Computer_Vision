@@ -1,4 +1,4 @@
-function [ H ] = createLPF( N, D_0, n )
+function [ mask ] = createLPF( N, D_0, n )
 %CREATELPF Creates a Butterworth LPF.
 
 s = N;
@@ -14,6 +14,6 @@ for k = 1:s
 end
 
 %Normalize
-H = H./(N^2);
+mask = H./(N^2);
 end
 
