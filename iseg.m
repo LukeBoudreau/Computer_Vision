@@ -32,10 +32,17 @@ title('Concatenated Histogram');
 print('Concatenated Histogram','-dpng');
 
 %% B) K-means
-c1 = 64;
-c2 = 191;
+% See lmeans.m
 
-%% C)
+% DEBUG: Compare with Matlab's kmeans
+%  [IDX, C] = kmeans(double(I(:)),k);
+%  i_seg = reshape(IDX,[rows,cols]);
+%  i_seg = i_seg./k;
+%  i_seg = imadjust(i_seg,[min(i_seg(:)),max(i_seg(:))],[0.0;1.0]);
+%  imshow(i_seg);
+%  title(sprintf('Segmentation %d clusters',k));
+
+%% C) Segmentation based on Intensity
 subplot(131);
 imshow(rgb);
 title('Original');
@@ -48,20 +55,84 @@ title('GrayScale');
 subplot(133);
 %Define number of clusters
 k = 5;
-[IDX, C] = lmeans(double(I(:)),k,20);
-i_seg = reshape(IDX,[rows,cols]);
-i_seg = i_seg./k;
-i_seg = imadjust(i_seg,[min(i_seg(:)),max(i_seg(:))],[0.0;1.0]);
-imshow(i_seg);
-title(sprintf('Segmentation %d clusters',k));
+%Perform custom implementation of Kmeans (Luke-means) on Intensity.
+[IDX, C] = lmeans(I,k,30);
+i_seg = IDX;
+% Use Centroids for actual point values
+i_seg(:,:) = C(IDX(:,:));
+%Truncate to keep original values
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k)); 
+print(sprintf('kmeans seg %d',k),'-dpng');
 
-%Compare with Matlab's kmeans
- [IDX, C] = kmeans(double(I(:)),k);
- i_seg = reshape(IDX,[rows,cols]);
- i_seg = i_seg./k;
- i_seg = imadjust(i_seg,[min(i_seg(:)),max(i_seg(:))],[0.0;1.0]);
- imshow(i_seg);
- title(sprintf('Segmentation %d clusters',k));
+%% D) Repeat with different values of K
+%Again with small number of k
+k = 2;
+%Perform custom implementation of Kmeans (Luke-means)
+[IDX, C] = lmeans(I,k,30);
+i_seg = IDX;
+% Use Centroids for actual point values
+i_seg(:,:) = C(IDX(:,:));
+%Truncate to keep original values
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k));
+print(sprintf('kmeans seg %d',k),'-dpng');
 
-%save
-print('k-means-seg-intensity','-dpng');
+%Again with large number of k
+k = 20;
+%Perform custom implementation of Kmeans (Luke-means)
+[IDX, C] = lmeans(I,k,30);
+i_seg = IDX;
+% Use Centroids for actual point values
+i_seg(:,:) = C(IDX(:,:));
+%Truncate to keep original values
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k));
+print(sprintf('kmeans seg %d',k),'-dpng');
+
+
+
+%% E) Segmentation based on Color
+k = 5;
+[IDX, C] = lmeans(rgb,k,50);
+i_seg = zeros(rows,cols,depth);
+for i = 1:rows
+    for j = 1:cols
+        i_seg(i,j,:) = C(IDX(i,j),:);
+    end
+end
+
+%Truncate to stay close to Centroid values.
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k));
+print(sprintf('Color kmeans seg %d',k),'-dpng');
+
+%Again with small number of k
+k = 2;
+[IDX, C] = lmeans(rgb,k,50);
+i_seg = zeros(rows,cols,depth);
+for i = 1:rows
+    for j = 1:cols
+        i_seg(i,j,:) = C(IDX(i,j),:);
+    end
+end
+
+%Truncate to stay close to Centroid values.
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k));
+print(sprintf('Color kmeans seg %d',k),'-dpng');
+
+%Again with large number of k
+k = 20;
+[IDX, C] = lmeans(rgb,k,50);
+i_seg = zeros(rows,cols,depth);
+for i = 1:rows
+    for j = 1:cols
+        i_seg(i,j,:) = C(IDX(i,j),:);
+    end
+end
+
+%Truncate to stay close to Centroid values.
+imshow(uint8(i_seg));
+title(sprintf('%d clusters Segmentation',k));
+print(sprintf('Color kmeans seg %d',k),'-dpng');

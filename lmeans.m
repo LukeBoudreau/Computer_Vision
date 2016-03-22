@@ -58,6 +58,8 @@ for i = 1:ITR
 
     %Divide by total number of elements
     numPoints = repmat(numPoints,1,depth);
+    %Do NOT divide by zero
+    numPoints(numPoints == 0)=1;
     newCentroids = newCentroids./numPoints;
 
     %If Centroids do not change (Significantly) then done.
