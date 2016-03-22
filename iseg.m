@@ -7,6 +7,8 @@ g = rgb(:,:,2);
 b = rgb(:,:,3);
 
 subplot(131);
+set(gcf, 'PaperUnits', 'inches', 'PaperPosition', [0 0 9 3]);
+set(gcf, 'Position', [488 342 1324 420]);
 histogram(r(:)');
 title('Red Channel');
 
