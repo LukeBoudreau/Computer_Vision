@@ -51,7 +51,7 @@ for i = 2:9
         continue;
     end
 
-    %Pick 3 different images from each class
+    %Pick 3 different images for each class
     tableData = zeros([3 5]);
     tableData(:,1) = randi([i*100 (i+1)*100-1],[3 1]);
     %Ensure we picked 3 different images
@@ -59,7 +59,6 @@ for i = 2:9
     while len ~= 3
         tableData(:,1) = randi([i*100 (i+1)*100-1],[3 1]);
         len = length(unique(tableData(:,1)));
-        display('loop');
     end
 
     for j = 1:3
