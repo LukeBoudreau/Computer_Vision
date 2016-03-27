@@ -58,7 +58,7 @@ for i = 2:9
     len = length(unique(tableData(:,1)));
     while len ~= 3
         tableData(:,1) = randi([i*100 (i+1)*100-1],[3 1]);
-        len = unique(tableData(:,1));
+        len = length(unique(tableData(:,1)));
         display('loop');
     end
 
@@ -104,7 +104,7 @@ for i = 2:9
         image = imread(sprintf('Color_Images\\Color_Images\\%d.jpg',name));
         imshow(image);
         title(sprintf('%d: %f',name,sorted_intersections(4,2)));
-        tableData(j,4) = floor(name/100)*100;
+        tableData(j,4) = floor(name/100)*100;        
         
         subplot(144);
         name = sorted_intersections(5,1);
