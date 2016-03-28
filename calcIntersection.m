@@ -1,6 +1,6 @@
 function [ ratio ] = calcIntersection( Hm, Hi )
 %CALCINTERSECTION Calculates the intersection between
-% two histograms for images.
+% two image histograms.
 % 
 
 len = min(length(Hm),length(Hi));

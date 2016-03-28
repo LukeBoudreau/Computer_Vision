@@ -53,6 +53,7 @@ for i = 2:9
 
     %Pick 3 different images for each class
     tableData = zeros([3 5]);
+    %Override the below line if you want to pick specific images
     tableData(:,1) = randi([i*100 (i+1)*100-1],[3 1]);
     %Ensure we picked 3 different images
     len = length(unique(tableData(:,1)));
