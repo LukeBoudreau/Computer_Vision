@@ -1,11 +1,5 @@
 % Image Retrieval using Texture Features
 %% A)
-L5 = [1 4 6 4 1];
-E5 = [-1 -2 0 2 1];
-S5 = [-1 0 2 0 -1];
-R5 = [1 -4 6 -4 1];
-
-
 map = containers.Map('KeyType', 'char','ValueType','any');
 %Read in all texture 
 for i = 1:40
@@ -95,6 +89,7 @@ fileprefix(6) = 'T25_plaid';
 for i = 1:6
     %Pick 3 different images from each class
     tableData = zeros([3 5]);
+    %Edit the below line to pick choose specific images.
     tableData(:,1) = randi([1 40],[3 1]);
     %Ensure we picked 3 different images
     len = length(unique(tableData(:,1)));
@@ -220,7 +215,7 @@ for i = 1:6
     imshow(image);
     title(sprintf('%s %02d: %f',name_prefix,name_num,sorted_distances(5,2))); 
 
-    print(sprintf('%s_resize_default',model_key),'-dpng','-r300');
+    print(sprintf('resize_%s_default',model_key),'-dpng','-r300');
     
 % Smaller size ======================================================
     
@@ -231,7 +226,7 @@ for i = 1:6
     model_key = sprintf('%s_%02d',prefix(i,:),image_index);
     display(sprintf('Finding matches for image %s (50%% smaller)',model_key));
     image = imread(sprintf('Texture_Images\\%s\\%s.jpg',fileprefix(i),model_key));
-    image = imresize(image,0.5);
+    image = imresize(image,0.25);
     new_feature_vector = calcText(image);
     
     %Find matches
@@ -278,7 +273,7 @@ for i = 1:6
     imshow(image);
     title(sprintf('%s %02d: %f',name_prefix,name_num,sorted_distances(5,2))); 
 
-    print(sprintf('%s_resize_smaller',model_key),'-dpng','-r300');
+    print(sprintf('resize_%s_smaller',model_key),'-dpng','-r300');
     
     % Larger size ======================================================
     
@@ -289,7 +284,7 @@ for i = 1:6
     model_key = sprintf('%s_%02d',prefix(i,:),image_index);
     display(sprintf('Finding matches for image %s (50%% larger)',model_key));
     image = imread(sprintf('Texture_Images\\%s\\%s.jpg',fileprefix(i),model_key));
-    image = imresize(image,1.5);
+    image = imresize(image,2);
     new_feature_vector = calcText(image);
     
     %Find matches
@@ -336,5 +331,5 @@ for i = 1:6
     imshow(image);
     title(sprintf('%s %02d: %f',name_prefix,name_num,sorted_distances(5,2))); 
 
-    print(sprintf('%s_resize_larger',model_key),'-dpng','-r300');
+    print(sprintf('resize_%s_larger',model_key),'-dpng','-r300');
 end
