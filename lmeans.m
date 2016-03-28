@@ -1,10 +1,9 @@
-function [ IDX C ] = lmeans( X, k, ITR )
+function [ IDX, C ] = lmeans( X, k, ITR )
 %LMEANS 
 % This function is Luke's Custom implementation of K-means Clustering.
 % PARAMETERS:
 % X is an MxNxd matrix
-% C=[] are the initial Centroids locations (Assumed Randomly initialized)
-% Each centroid must have d Coordinates (based on X values).
+% k is the the number of clusters (and centroids)
 % ITR is the iteration limit.
 
 

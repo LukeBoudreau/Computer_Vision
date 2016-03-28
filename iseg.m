@@ -7,7 +7,7 @@ g = rgb(:,:,2);
 b = rgb(:,:,3);
 
 subplot(131);
-% set(gcf, 'PaperUnits', 'inches', 'PaperPosition', [0 0 9 3]);
+set(gcf, 'PaperUnits', 'inches', 'PaperPosition', [0 0 10 3]);
 set(gcf, 'Position', [488 342 1324 420]);
 histogram(r(:)');
 title('Red Channel');
@@ -31,7 +31,7 @@ b_2 = b_2.Values;
 h_concatenated = [r_2 g_2 b_2];
 bar(h_concatenated);
 title('Concatenated Histogram');
-print('Concatenated Histogram','-dpng');
+print('Concatenated Histogram','-dpng', '-r300');
 
 %% B) K-means
 % See lmeans.m
@@ -65,7 +65,7 @@ i_seg(:,:) = C(IDX(:,:));
 %Truncate to keep original values
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k)); 
-print(sprintf('kmeans seg %d',k),'-dpng');
+print(sprintf('kmeans seg %d',k),'-dpng','-r300');
 
 %% D) Repeat with different values of K
 %Again with small number of k
@@ -78,7 +78,7 @@ i_seg(:,:) = C(IDX(:,:));
 %Truncate to keep original values
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k));
-print(sprintf('kmeans seg %d',k),'-dpng');
+print(sprintf('kmeans seg %d',k),'-dpng','-r300');
 
 %Again with large number of k
 k = 20;
@@ -90,7 +90,7 @@ i_seg(:,:) = C(IDX(:,:));
 %Truncate to keep original values
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k));
-print(sprintf('kmeans seg %d',k),'-dpng');
+print(sprintf('kmeans seg %d',k),'-dpng','-r300');
 
 
 
@@ -107,7 +107,7 @@ end
 %Truncate to stay close to Centroid values.
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k));
-print(sprintf('Color kmeans seg %d',k),'-dpng');
+print(sprintf('Color kmeans seg %d',k),'-dpng','-r300');
 
 %Again with small number of k
 k = 2;
@@ -122,7 +122,7 @@ end
 %Truncate to stay close to Centroid values.
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k));
-print(sprintf('Color kmeans seg %d',k),'-dpng');
+print(sprintf('Color kmeans seg %d',k),'-dpng','-r300');
 
 %Again with large number of k
 k = 20;
@@ -137,4 +137,4 @@ end
 %Truncate to stay close to Centroid values.
 imshow(uint8(i_seg));
 title(sprintf('%d clusters Segmentation',k));
-print(sprintf('Color kmeans seg %d',k),'-dpng');
+print(sprintf('Color kmeans seg %d',k),'-dpng','-r300');
